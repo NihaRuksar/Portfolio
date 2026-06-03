@@ -448,7 +448,7 @@ export function AllProjectsAccordion() {
                   transition={{ duration: 0.6, delay: 0.5 }}
                   className="flex flex-wrap items-center gap-4 mt-8"
                 >
-                  {selectedProject.demoUrl !== '#' && (
+                  {selectedProject.demoUrl && selectedProject.demoUrl !== '#' && (
                     <a href={selectedProject.demoUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="group/btn relative flex items-center justify-center space-x-2 px-6 py-3 rounded-lg overflow-hidden transition-all duration-300 bg-white text-black hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.15)]">
                       <span className="font-sans tracking-widest text-[10px] font-bold relative z-10 uppercase transition-colors">Play Demo</span>
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform relative z-10" />
