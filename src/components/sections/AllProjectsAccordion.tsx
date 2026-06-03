@@ -18,7 +18,7 @@ const projects = [
       'ORM-based database layer with SQLAlchemy'
     ],
     tech: ['Python', 'FastAPI', 'React', 'Redux Toolkit', 'Tailwind CSS', 'LangChain', 'LangGraph', 'Groq API', 'MySQL', 'SQLAlchemy', 'REST APIs', 'RBAC', 'Git'],
-    image: 'src/assets/images/hr-assistant.png',
+    image: hrAssistant,
     demoUrl: '#',
     tags: ['In Progress', 'AI']
   },
