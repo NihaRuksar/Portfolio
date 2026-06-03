@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useAnimationControls } from 'motion/react';
 import { Github, ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import hrAssistant from './assets/images/hr-assistant.png'
 
 const projects = [
 // ... (projects array remains the same)
@@ -17,7 +18,7 @@ const projects = [
       'ORM-based database layer with SQLAlchemy'
     ],
     tech: ['Python', 'FastAPI', 'React', 'Redux Toolkit', 'Tailwind CSS', 'LangChain', 'LangGraph', 'Groq API', 'MySQL', 'SQLAlchemy', 'REST APIs', 'RBAC', 'Git'],
-    image: 'https://i.ibb.co/q3RJZCyW/image.png',
+    image: 'src/assets/images/hr-assistant.png',
     demoUrl: '#',
     tags: ['In Progress', 'AI']
   },

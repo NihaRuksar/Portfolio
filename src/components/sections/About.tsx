@@ -26,10 +26,10 @@ export function About() {
   return (
     <section ref={ref} id="about" className="relative -mt-20 md:-mt-32 z-20 py-16 md:py-24 px-6 md:px-12 lg:px-24 overflow-hidden">
       
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-20 items-center justify-between relative z-10">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-20 items-start justify-between relative z-10">
         
         {/* Left Side: Editorial Image */}
-        <div className="w-full lg:w-[45%] relative min-h-[500px] flex items-center justify-center lg:justify-start">
+        <div className="w-full lg:w-[45%] relative min-h-[500px] flex items-start justify-center lg:justify-start">
           <motion.div 
             initial={{ opacity: 0, y: 80, filter: 'blur(10px)' }}
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}

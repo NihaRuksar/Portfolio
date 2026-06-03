@@ -76,7 +76,7 @@ export function Hero() {
           />
 
           {/* Fully Fitted Image on Top */}
-          <div className="w-full relative h-[30vh] sm:h-[35vh] md:h-[40vh] rounded-[24px] md:rounded-[28px] overflow-hidden group z-10">
+          <div className="w-full relative h-[35vh] sm:h-[42vh] md:h-[52vh] rounded-[24px] md:rounded-[28px] overflow-hidden group z-10">
             <img 
               src="https://i.ibb.co/YBfsSTpx/Chat-GPT-Image-May-16-2026-02-51-40-PM.png" 
               referrerPolicy="no-referrer"
@@ -101,7 +101,7 @@ export function Hero() {
               <div className="h-[1px] w-6 md:w-12 bg-gradient-to-l from-transparent to-[#F5F7FF]/30"></div>
             </div>
 
-            <h1 className="font-serif text-3xl md:text-4xl tracking-tight text-[#F5F5F5] mb-12 md:mb-16 font-light">
+            <h1 className="font-serif text-3xl md:text-4xl tracking-tight text-[#F5F5F5] mb-6 md:mb-8 font-light">
               <span className="italic text-[#B5B8C5]">Hi, I'm</span> <span className="font-medium drop-shadow-md">Niha Ruksar</span>
             </h1>
 
