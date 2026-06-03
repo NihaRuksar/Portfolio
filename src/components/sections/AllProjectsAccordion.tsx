@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useAnimationControls } from 'motion/react';
 import { Github, ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import hrAssistant from './assets/images/hr-assistant.png'
+import hrAssistant from '../../assets/images/hr-assistant.png'
 
 const projects = [
 // ... (projects array remains the same)
