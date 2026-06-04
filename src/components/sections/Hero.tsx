@@ -77,12 +77,22 @@ export function Hero() {
 
           {/* Fully Fitted Image on Top */}
           <div className="w-full relative h-[52vh] sm:h-[42vh] md:h-[52vh] rounded-[24px] md:rounded-[28px] overflow-hidden group z-10">
+            {/* Mobile image - hidden on md and above */}
+            <img 
+              src="https://ibb.co/GbzXtG3" 
+              referrerPolicy="no-referrer"
+              alt="Niha Ruksar" 
+              loading="lazy"
+              className="w-full h-full object-cover object-[center_10%] opacity-90 transition-all duration-1000 ease-out group-hover:scale-105 group-hover:opacity-100 group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] block md:hidden"
+             />
+
+            {/* Desktop image - hidden below md */}
             <img 
               src="https://i.ibb.co/YBfsSTpx/Chat-GPT-Image-May-16-2026-02-51-40-PM.png" 
               referrerPolicy="no-referrer"
               alt="Niha Ruksar" 
               loading="lazy"
-              className="w-full h-full object-cover object-[center_10%] sm:object-[center_15%] opacity-90 transition-all duration-1000 ease-out group-hover:scale-105 group-hover:opacity-100 group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+              className="w-full h-full object-cover object-[center_15%] opacity-90 transition-all duration-1000 ease-out group-hover:scale-105 group-hover:opacity-100 group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] hidden md:block"
             />
             <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-[#05050A]/90 via-[#05050A]/30 to-transparent pointer-events-none z-20" />
             
