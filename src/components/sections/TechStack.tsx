@@ -96,7 +96,7 @@ export function TechStack() {
                   className={`px-4 py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-widest transition-all duration-300 border backdrop-blur-md ${
                     activeFilter === option
                       ? 'bg-[#7C8CFF]/20 border-[#7C8CFF]/50 text-[#7C8CFF] shadow-[0_0_20px_rgba(124,140,255,0.3)]'
-                      : 'bg-white/5 border-white/10 text-[#B5B8C5] hover:bg-white/10 hover:border-white/20 hover:text-[#F5F5F5]'
+                      : 'bg-white/5 border-white/10 text-[#B5B8C5] hover:bg-white/10 active:bg-white/10 hover:border-white/20 active:border-white/20 hover:text-[#F5F5F5] active:text-[#F5F5F5]'
                   }`}
                 >
                   {option}
@@ -131,18 +131,18 @@ export function TechStack() {
                   {category.skills.map((skill) => (
                     <div 
                       key={skill.name}
-                      className="group flex flex-col items-center justify-center gap-3 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300 pointer-events-auto shadow-sm"
+                      className="group cursor-pointer flex flex-col items-center justify-center gap-3 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] active:bg-white/[0.06] hover:border-white/10 active:border-white/10 transition-all duration-300 pointer-events-auto shadow-sm"
                     >
-                      <div className="relative w-10 h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1">
+                      <div className="relative w-10 h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-active:scale-110 group-hover:-translate-y-1 group-active:-translate-y-1">
                         <img 
                           src={skill.imgSrc} 
                           alt={skill.name} 
-                          className="w-full h-full object-contain filter brightness-90 saturate-50 group-hover:filter-none transition-all duration-500"
+                          className="w-full h-full object-contain filter brightness-90 saturate-50 group-hover:filter-none group-active:filter-none transition-all duration-500"
                           loading="lazy"
                         />
-                        <div className="absolute inset-0 bg-[#7C8CFF]/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                        <div className="absolute inset-0 bg-[#7C8CFF]/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 pointer-events-none" />
                       </div>
-                       <span className="font-mono text-[10px] text-[#B5B8C5] tracking-wider text-center group-hover:text-[#F5F5F5] transition-colors">
+                       <span className="font-mono text-[10px] text-[#B5B8C5] tracking-wider text-center group-hover:text-[#F5F5F5] group-active:text-[#F5F5F5] transition-colors">
                         {skill.name}
                       </span>
                     </div>
