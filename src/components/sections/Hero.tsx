@@ -79,7 +79,7 @@ export function Hero() {
           <div className="w-full relative h-[52vh] sm:h-[42vh] md:h-[52vh] rounded-[24px] md:rounded-[28px] overflow-hidden group z-10">
             {/* Mobile image - hidden on md and above */}
             <img 
-              src="https://i.ibb.co/QvtKYRHL/Chat-GPT-Image-Jun-4-2026-08-29-14-PM.png" 
+              src="https://i.ibb.co/BHG4G2Vs/Chat-GPT-Image-Jun-4-2026-08-43-31-PM.png" 
               referrerPolicy="no-referrer"
               alt="Niha Ruksar" 
               loading="lazy"
