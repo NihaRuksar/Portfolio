@@ -45,7 +45,7 @@ export function Contact() {
             </div>
 
             <div className="flex items-center justify-center gap-4">
-              <a href="https://www.linkedin.com/in/niha-ruksar-750048270/" target="_blank" rel="noreferrer" className="group/link flex items-center justify-center w-14 h-14 rounded-full border border-white/10 bg-white/5 hover:bg-[#7C8CFF]/20 hover:border-[#7C8CFF]/40 hover:shadow-[0_0_20px_rgba(124,140,255,0.3)] hover:-translate-y-1 transition-all duration-300 relative">
+              <a href="https://www.linkedin.com/in/niha-ruksar/" target="_blank" rel="noreferrer" className="group/link flex items-center justify-center w-14 h-14 rounded-full border border-white/10 bg-white/5 hover:bg-[#7C8CFF]/20 hover:border-[#7C8CFF]/40 hover:shadow-[0_0_20px_rgba(124,140,255,0.3)] hover:-translate-y-1 transition-all duration-300 relative">
                 <Linkedin className="w-5 h-5 text-[#B5B8C5] group-hover/link:text-[#F5F7FF] transition-colors" />
                 <ArrowUpRight className="absolute -top-1 -right-1 w-3 h-3 text-[#7C8CFF] opacity-0 group-hover/link:opacity-100 transition-opacity" />
               </a>
