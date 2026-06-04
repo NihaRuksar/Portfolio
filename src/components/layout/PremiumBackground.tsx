@@ -4,9 +4,18 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'moti
 export function PremiumBackground() {
   const { scrollYProgress } = useScroll();
   const [isHovering, setIsHovering] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    // initial check
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // 3D Glass Discs Background Image with subtle mouse parallax
-  const bgImage = "https://i.ibb.co/Q7cPKv6V/project-bacground-option-1.png";
+  const bgImage = "https://i.ibb.co/chxNypW4/laptop.png";
 
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
 
@@ -61,36 +70,48 @@ export function PremiumBackground() {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#05050A]">
-      {/* 3D Glass Discs Background Image with subtle mouse parallax */}
-      <motion.div 
-        className="absolute inset-[-5%] w-[110%] h-[110%]"
+      {/* Container for the background that handles responsive rotation */}
+      <div 
+        className="absolute top-1/2 left-1/2 flex items-center justify-center will-change-transform"
         style={{
-          backgroundImage: `url(${bgImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          y: bgY,
-          x: mouseMoveX,
+          width: isMobile ? '110vh' : '110vw',
+          height: isMobile ? '110vw' : '110vh',
+          transform: `translate(-50%, -50%) rotate(${isMobile ? 90 : 0}deg)`,
+          transition: 'all 0.6s ease-in-out',
         }}
-        animate={{
-          scale: isHovering ? [1, 1.03, 1] : [1, 1.02, 1],
-          filter: isHovering ? 'brightness(1.1) contrast(1.05)' : 'brightness(1) contrast(1)',
-        }}
-        transition={{
-          scale: {
-            duration: isHovering ? 10 : 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          },
-          filter: { duration: 0.8, ease: "easeOut" }
-        }}
-      />
+      >
+        {/* 3D Glass Discs Background Image with subtle mouse parallax */}
+        <motion.div 
+          className="w-full h-full"
+          style={{
+            backgroundImage: `url(${bgImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            y: bgY,
+            x: mouseMoveX,
+          }}
+          animate={{
+            scale: isHovering ? [1, 1.03, 1] : [1, 1.02, 1],
+            filter: isHovering ? 'brightness(1.1) contrast(1.05)' : 'brightness(1) contrast(1)',
+          }}
+          transition={{
+            scale: {
+              duration: isHovering ? 10 : 20,
+              repeat: Infinity,
+              ease: "easeInOut"
+            },
+            filter: { duration: 0.8, ease: "easeOut" }
+          }}
+        />
+      </div>
 
-      {/* Very subtle dark overlay for readability */}
+      {/* Dark overlay for readability */}
       <div 
         className="absolute inset-0 w-full h-full"
         style={{
-          backgroundImage: 'linear-gradient(to bottom, rgba(5,5,10,0.6) 0%, rgba(5,5,10,0.85) 100%)'
+          backgroundColor: 'rgba(0, 0, 0, 0.45)',
+          transition: 'all 0.6s ease-in-out'
         }}
       />
 
