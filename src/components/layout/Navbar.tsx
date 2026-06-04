@@ -1,5 +1,6 @@
-import { motion, useScroll, useTransform } from 'motion/react';
-import React, { useEffect, useState } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
+import React, { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
 const navItems = [
   { name: 'HOME', href: '#home' },
@@ -11,6 +12,7 @@ const navItems = [
 
 export function Navbar() {
   const { scrollY } = useScroll();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navTop = useTransform(scrollY, [0, 300], ['2rem', '0.5rem']);
   
@@ -105,7 +107,41 @@ export function Navbar() {
             </a>
           ))}
         </div>
+
+        <button
+          className="md:hidden flex items-center justify-center p-2 text-[#B5B8C5] hover:text-[#F5F5F5] transition-colors"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </motion.div>
+
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            style={{ width: navWidth }}
+            className="absolute top-full mt-4 left-0 right-0 mx-auto p-4 rounded-2xl bg-[#0F0F1E]/95 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-col space-y-4 md:hidden"
+          >
+            {navItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={(e) => {
+                  setIsMobileMenuOpen(false);
+                  handleNavClick(e, item.href);
+                }}
+                className="text-center text-xs font-sans font-medium tracking-[0.2em] text-[#B5B8C5] hover:text-[#F5F7FF] uppercase py-2"
+              >
+                {item.name}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 }
