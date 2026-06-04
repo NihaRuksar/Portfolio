@@ -16,7 +16,6 @@ export function Navbar() {
 
   const navTop = useTransform(scrollY, [0, 300], ['2rem', '0.5rem']);
   
-  // Fade out background and border for that "transparent" effect
   const navBackground = useTransform(
     scrollY, 
     [0, 300], 
@@ -42,7 +41,7 @@ export function Navbar() {
       e.preventDefault();
       const element = document.querySelector(href);
       if (element) {
-        let offset = 0;
+        let offset = 100;
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.scrollY - offset;
 
@@ -96,7 +95,7 @@ export function Navbar() {
 
         <div className="hidden md:flex items-center space-x-6 sm:space-x-8">
           {navItems.map((item) => (
-            <a
+            
               key={item.name}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.href)}
@@ -127,7 +126,7 @@ export function Navbar() {
             className="absolute top-full mt-4 left-0 right-0 mx-auto p-4 rounded-2xl bg-[#0F0F1E]/95 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-col space-y-4 md:hidden"
           >
             {navItems.map((item) => (
-              <a
+              
                 key={item.name}
                 href={item.href}
                 onClick={(e) => {
