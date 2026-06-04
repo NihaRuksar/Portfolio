@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useAnimationControls } from 'motion/react';
 import { Github, ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import hrAssistant from '../../assets/images/hr-assistant.png'
 
 const projects = [
 // ... (projects array remains the same)
@@ -18,7 +17,7 @@ const projects = [
       'ORM-based database layer with SQLAlchemy'
     ],
     tech: ['Python', 'FastAPI', 'React', 'Redux Toolkit', 'Tailwind CSS', 'LangChain', 'LangGraph', 'Groq API', 'MySQL', 'SQLAlchemy', 'REST APIs', 'RBAC', 'Git'],
-    image: hrAssistant,
+    image: 'https://i.ibb.co/nNDPWBgn/resized-image.png',
     demoUrl: '#',
     tags: ['In Progress', 'AI']
   },
@@ -203,7 +202,7 @@ export function AllProjectsAccordion() {
               className={`px-4 py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-widest transition-all duration-300 border backdrop-blur-md ${
                 activeFilter === option
                   ? 'bg-[#7C8CFF]/20 border-[#7C8CFF]/50 text-[#7C8CFF] shadow-[0_0_20px_rgba(124,140,255,0.3)]'
-                  : 'bg-white/5 border-white/10 text-[#B5B8C5] hover:bg-white/10 hover:border-white/20 hover:text-[#F5F5F5]'
+                  : 'bg-white/5 border-white/10 text-[#B5B8C5] hover:bg-white/10 active:bg-white/10 hover:border-white/20 active:border-white/20 hover:text-[#F5F5F5] active:text-[#F5F5F5]'
               }`}
             >
               {option}
@@ -243,7 +242,7 @@ export function AllProjectsAccordion() {
                 whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 viewport={{ once: true, margin: "50px" }}
                 transition={{ duration: 0.6, delay: (index % projects.length) * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="w-[280px] h-[380px] md:w-[320px] md:h-[420px] shrink-0 bg-[#0A0A0E] border border-white/5 rounded-3xl overflow-hidden flex flex-col group transition-all duration-300 hover:border-white/20 hover:bg-[#111116] hover:-translate-y-2 shadow-2xl relative cursor-pointer"
+                className="w-[280px] h-[380px] md:w-[320px] md:h-[420px] shrink-0 bg-[#0A0A0E] border border-white/5 rounded-3xl overflow-hidden flex flex-col group transition-all duration-300 hover:border-white/20 active:border-white/20 hover:bg-[#111116] active:bg-[#111116] hover:-translate-y-2 active:-translate-y-2 shadow-2xl relative cursor-pointer"
                 onClick={() => setSelectedProject(project)}
               >
                 {/* Status Badges */}
@@ -258,7 +257,7 @@ export function AllProjectsAccordion() {
                 )}
                 
                 {/* Lighting Sweep Animation on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#7C8CFF]/15 to-transparent -translate-x-[150%] skew-x-[-30deg] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out z-20 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#7C8CFF]/15 to-transparent -translate-x-[150%] skew-x-[-30deg] group-hover:translate-x-[150%] group-active:translate-x-[150%] transition-transform duration-1000 ease-in-out z-20 pointer-events-none" />
 
                 {/* Thumbnail */}
                 <div className="w-full h-[55%] relative overflow-hidden flex-shrink-0 bg-[#020205]">
@@ -266,7 +265,7 @@ export function AllProjectsAccordion() {
                     layoutId={`project-image-${project.id}-${index}`}
                     src={project.image}
                     alt={project.title}
-                    className={`w-full h-full transition-transform duration-1000 group-hover:scale-105 ${project.id === 5 ? 'object-contain object-center p-6' : 'object-cover object-top'}`}
+                    className={`w-full h-full transition-transform duration-1000 group-hover:scale-105 group-active:scale-105 ${project.id === 5 ? 'object-contain object-center p-6' : 'object-cover object-top'}`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#05050A]/95 via-[#05050A]/20 to-transparent z-10" />
                 </div>
@@ -276,12 +275,12 @@ export function AllProjectsAccordion() {
                   <h4 className="font-mono text-[9px] text-[#7C8CFF] tracking-widest uppercase mb-1.5 drop-shadow-md">
                     {project.subtitle}
                   </h4>
-                  <h3 className="font-serif text-xl md:text-2xl text-[#F5F5F5] font-light drop-shadow-md line-clamp-1 transition-all duration-300 group-hover:text-white">
+                  <h3 className="font-serif text-xl md:text-2xl text-[#F5F5F5] font-light drop-shadow-md line-clamp-1 transition-all duration-300 group-hover:text-white group-active:text-white">
                     {project.title}
                   </h3>
                   
                   {/* Tech Tags */}
-                  <div className="flex flex-wrap gap-1.5 mt-auto mb-1 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="flex flex-wrap gap-1.5 mt-auto mb-1 opacity-80 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300">
                     {project.tech.slice(0, 3).map(tech => (
                       <span key={tech} className="font-mono text-[8px] uppercase tracking-wider px-1.5 py-0.5 bg-white/5 border border-white/10 text-white/80 rounded">
                         {tech}
@@ -326,7 +325,7 @@ export function AllProjectsAccordion() {
             >
               {/* Close Button */}
               <button
-                className="absolute top-4 right-4 p-3 text-white/50 hover:text-white bg-black/40 hover:bg-black/90 rounded-full transition-all z-50 backdrop-blur-md border border-white/10 hover:scale-105"
+                className="absolute top-4 right-4 p-3 text-white/50 hover:text-white active:text-white bg-black/40 hover:bg-black/90 active:bg-black/90 rounded-full transition-all z-50 backdrop-blur-md border border-white/10 hover:scale-105 active:scale-105"
                 onClick={(e) => { e.stopPropagation(); setSelectedProject(null); }}
               >
                 <X className="w-5 h-5" />
@@ -338,14 +337,14 @@ export function AllProjectsAccordion() {
                   className="w-full shrink-0 md:w-[45%] bg-[#020205] relative min-h-[30vh] md:min-h-[40vh] flex items-center justify-center p-4 cursor-pointer group"
                   onClick={(e) => { e.stopPropagation(); setSelectedProject(null); }}
                 >
-                  <div className="absolute inset-0 flex items-center justify-center z-30 opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-sm pointer-events-none">
+                  <div className="absolute inset-0 flex items-center justify-center z-30 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity bg-black/40 backdrop-blur-sm pointer-events-none">
                     <span className="font-mono text-[10px] uppercase tracking-widest text-[#7C8CFF] px-4 py-2 bg-black/80 rounded-full border border-[#7C8CFF]/30">Back</span>
                   </div>
                   <motion.img
                     src={(selectedProject as any).modalImage || selectedProject.image}
                     alt={selectedProject.title}
                     loading="lazy"
-                    className="w-full h-full object-contain object-center shadow-2xl transition-transform duration-700 group-hover:scale-[0.98]"
+                    className="w-full h-full object-contain object-center shadow-2xl transition-transform duration-700 group-hover:scale-[0.98] group-active:scale-[0.98]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#05050A]/20 to-[#05050A] md:block hidden pointer-events-none" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#05050A] via-[#05050A]/20 to-transparent md:hidden block pointer-events-none" />
@@ -361,7 +360,7 @@ export function AllProjectsAccordion() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="bg-white/[0.04] border border-white/10 rounded-xl p-5 mb-8 hover:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+                  className="bg-white/[0.04] border border-white/10 rounded-xl p-5 mb-8 hover:bg-white/[0.08] active:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#7C8CFF] shadow-[0_0_8px_#7C8CFF]" />
@@ -386,7 +385,7 @@ export function AllProjectsAccordion() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                     {'keyChallenges' in selectedProject && selectedProject.keyChallenges && (
-                      <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5 hover:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+                      <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5 hover:bg-white/[0.08] active:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
                         <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-3">
                           <div className="w-1.5 h-1.5 rounded-full bg-[#7C8CFF] shadow-[0_0_8px_#7C8CFF]" />
                           <h5 className="font-mono text-[11px] sm:text-xs text-white font-bold tracking-widest uppercase drop-shadow-sm">Key Challenges</h5>
@@ -395,14 +394,14 @@ export function AllProjectsAccordion() {
                           {selectedProject.keyChallenges.map((challenge, idx) => (
                             <li key={idx} className="flex items-start gap-2.5 group">
                               <span className="text-[#7C8CFF] mt-0.5 text-[11px] md:text-xs transition-colors drop-shadow-sm">▹</span>
-                              <span className="font-sans text-[#F5F5F5] font-medium text-[12px] md:text-[13px] leading-relaxed group-hover:text-white transition-colors drop-shadow-sm">{challenge}</span>
+                              <span className="font-sans text-[#F5F5F5] font-medium text-[12px] md:text-[13px] leading-relaxed group-hover:text-white group-active:text-white transition-colors drop-shadow-sm">{challenge}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
                     {'technicalDecisions' in selectedProject && selectedProject.technicalDecisions && (
-                      <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5 hover:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+                      <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5 hover:bg-white/[0.08] active:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
                         <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-3">
                           <div className="w-1.5 h-1.5 rounded-full bg-[#7C8CFF] shadow-[0_0_8px_#7C8CFF]" />
                           <h5 className="font-mono text-[11px] sm:text-xs text-white font-bold tracking-widest uppercase drop-shadow-sm">Technical Decisions</h5>
@@ -411,7 +410,7 @@ export function AllProjectsAccordion() {
                           {selectedProject.technicalDecisions.map((decision, idx) => (
                             <li key={idx} className="flex items-start gap-2.5 group">
                               <span className="text-[#7C8CFF] mt-0.5 text-[11px] md:text-xs transition-colors drop-shadow-sm">▹</span>
-                              <span className="font-sans text-[#F5F5F5] font-medium text-[12px] md:text-[13px] leading-relaxed group-hover:text-white transition-colors drop-shadow-sm">{decision}</span>
+                              <span className="font-sans text-[#F5F5F5] font-medium text-[12px] md:text-[13px] leading-relaxed group-hover:text-white group-active:text-white transition-colors drop-shadow-sm">{decision}</span>
                             </li>
                           ))}
                         </ul>
@@ -424,7 +423,7 @@ export function AllProjectsAccordion() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                  className="bg-white/[0.04] border border-white/10 rounded-xl p-5 mb-8 hover:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+                  className="bg-white/[0.04] border border-white/10 rounded-xl p-5 mb-8 hover:bg-white/[0.08] active:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#7C8CFF] shadow-[0_0_8px_#7C8CFF]" />
@@ -449,13 +448,13 @@ export function AllProjectsAccordion() {
                   className="flex flex-wrap items-center gap-4 mt-8"
                 >
                   {selectedProject.demoUrl && selectedProject.demoUrl !== '#' && (
-                    <a href={selectedProject.demoUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="group/btn relative flex items-center justify-center space-x-2 px-6 py-3 rounded-lg overflow-hidden transition-all duration-300 bg-white text-black hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.15)]">
+                    <a href={selectedProject.demoUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="group/btn relative flex items-center justify-center space-x-2 px-6 py-3 rounded-lg overflow-hidden transition-all duration-300 bg-white text-black hover:scale-105 active:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.15)]">
                       <span className="font-sans tracking-widest text-[10px] font-bold relative z-10 uppercase transition-colors">Play Demo</span>
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform relative z-10" />
                     </a>
                   )}
                   {selectedProject.githubUrl && (
-                    <a href={selectedProject.githubUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="group/link flex items-center justify-center space-x-2 px-6 py-3 rounded-lg border border-white/20 text-[#F5F5F5] bg-black/40 hover:bg-white/10 hover:border-white/40 transition-all duration-300 backdrop-blur-md">
+                    <a href={selectedProject.githubUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="group/link flex items-center justify-center space-x-2 px-6 py-3 rounded-lg border border-white/20 text-[#F5F5F5] bg-black/40 hover:bg-white/10 hover:border-white/40 active:bg-white/10 active:border-white/40 transition-all duration-300 backdrop-blur-md">
                       <Github className="w-4 h-4 group-hover/link:scale-110 transition-transform" /> 
                       <span className="font-sans tracking-widest text-[10px] font-medium uppercase">Source Code</span>
                     </a>
