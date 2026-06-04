@@ -33,7 +33,7 @@ export function CustomCursor() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 pointer-events-none z-[99999]"
+      className="fixed top-0 left-0 pointer-events-none z-[99999] hidden md:block"
       style={{ x: springX, y: springY }}
     >
       <svg className="w-8 h-8 -translate-x-[2px] -translate-y-[2px]" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
