@@ -26,10 +26,10 @@ export function About() {
   return (
     <section ref={ref} id="about" className="relative -mt-20 md:-mt-32 z-20 py-16 md:py-24 px-6 md:px-12 lg:px-24 overflow-hidden">
       
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-20 items-start justify-between relative z-10">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-20 items-center justify-between relative z-10">
         
         {/* Left Side: Editorial Image */}
-        <div className="w-full lg:w-[45%] relative min-h-[500px] flex items-start justify-center lg:justify-start">
+        <div className="w-full lg:w-[45%] relative min-h-[500px] flex items-center justify-center lg:justify-start">
           <motion.div 
             initial={{ opacity: 0, y: 80, filter: 'blur(10px)' }}
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -44,7 +44,7 @@ export function About() {
                 referrerPolicy="no-referrer"
                 loading="lazy"
                 alt="Workspace" 
-                className="w-full h-full object-cover object-center transition-all duration-700 ease-out opacity-90 group-hover:opacity-100"
+                className="w-full h-full object-cover object-center transition-all duration-700 ease-out opacity-90 group-hover:opacity-100 group-active:opacity-100"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#05050A]/60 via-transparent to-transparent pointer-events-none" />
             </div>
@@ -132,7 +132,7 @@ export function About() {
                       hidden: { opacity: 0, scale: 0.8, y: 15 },
                       visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
                     }}
-                    className="px-5 py-2.5 rounded-[12px] border border-white/5 bg-white/[0.03] font-mono text-[10px] md:text-[11px] text-[#7C8CFF] tracking-widest hover:-translate-y-[2px] hover:bg-white/[0.08] hover:border-[#7C8CFF]/50 transition-all duration-300"
+                    className="px-5 py-2.5 rounded-[12px] border border-white/5 bg-white/[0.03] font-mono text-[10px] md:text-[11px] text-[#7C8CFF] tracking-widest hover:-translate-y-[2px] active:-translate-y-[2px] hover:bg-white/[0.08] active:bg-white/[0.08] hover:border-[#7C8CFF]/50 active:border-[#7C8CFF]/50 transition-all duration-300"
                   >
                     {role}
                   </motion.span>
