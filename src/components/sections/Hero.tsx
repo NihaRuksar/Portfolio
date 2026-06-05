@@ -79,7 +79,7 @@ export function Hero() {
           <div className="w-full relative h-[52vh] sm:h-[42vh] md:h-[52vh] rounded-[24px] md:rounded-[28px] overflow-hidden group z-10">
             {/* Mobile image - hidden on md and above */}
             <img 
-              src="https://i.ibb.co/BHG4G2Vs/Chat-GPT-Image-Jun-4-2026-08-43-31-PM.png" 
+              src="https://i.ibb.co/LXFBBWrT/Chat-GPT-Image-Jun-6-2026-03-23-57-AM.png" 
               referrerPolicy="no-referrer"
               alt="Niha Ruksar" 
               loading="lazy"
@@ -88,7 +88,7 @@ export function Hero() {
 
             {/* Desktop image - hidden below md */}
             <img 
-              src="https://i.ibb.co/YBfsSTpx/Chat-GPT-Image-May-16-2026-02-51-40-PM.png" 
+              src="https://i.ibb.co/Pv3BfBmT/Chat-GPT-Image-Jun-6-2026-03-27-41-AM.png" 
               referrerPolicy="no-referrer"
               alt="Niha Ruksar" 
               loading="lazy"
