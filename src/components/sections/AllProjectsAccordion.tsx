@@ -80,7 +80,7 @@ const projects = [
       'React for component reusability'
     ],
     tech: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Tailwind CSS'],
-    image: 'https://i.ibb.co/MyvrdmmM/Chat-GPT-Image-May-16-2026-09-48-43-AM.png',
+    image: 'https://i.ibb.co/844MXVg4/Chat-GPT-Image-Jun-6-2026-04-09-33-AM.png',
     modalImage: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?q=80&w=1974&auto=format&fit=crop',
     demoUrl: 'https://floralwe.netlify.app/',
     githubUrl: 'https://github.com/NihaRuksar/Flower-shop?tab=readme-ov-file#readme',
