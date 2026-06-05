@@ -77,7 +77,7 @@ export function PremiumBackground() {
           width: isMobile ? '110vh' : '110vw',
           height: isMobile ? '110vw' : '110vh',
           transform: `translate(-50%, -50%) rotate(${isMobile ? 90 : 0}deg)`,
-          transition: 'all 0.6s ease-in-out',
+          transition: 'transform 0.6s ease-in-out',
         }}
       >
         {/* 3D Glass Discs Background Image with subtle mouse parallax */}
@@ -111,7 +111,7 @@ export function PremiumBackground() {
         className="absolute inset-0 w-full h-full"
         style={{
           backgroundColor: 'rgba(0, 0, 0, 0.45)',
-          transition: 'all 0.6s ease-in-out'
+          transition: 'background-color 0.6s ease-in-out'
         }}
       />
 
