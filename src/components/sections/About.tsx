@@ -26,9 +26,9 @@ export function About() {
   return (
     <section ref={ref} id="about" className="relative -mt-20 md:-mt-32 z-20 py-16 md:py-24 px-6 md:px-12 lg:px-24 overflow-hidden">
       
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-20 lg:items-start justify-between relative z-10">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-20 items-center justify-between relative z-10">
         
-        {/* Left Side: Editorial Image - shows first on mobile, left on laptop */}
+        {/* Left Side: Editorial Image */}
         <div className="w-full lg:w-[45%] relative min-h-[500px] flex items-center justify-center lg:justify-start">
           <motion.div 
             initial={{ opacity: 0, y: 80, filter: 'blur(10px)' }}
@@ -40,7 +40,7 @@ export function About() {
             <div className="absolute inset-0 overflow-hidden rounded-[20px] m-3 md:m-4 bg-[#05050A]/30">
               <motion.img 
                 whileHover={{ scale: 1.05 }}
-                src="https://i.ibb.co/nMS11LHF/Chat-GPT-Image-May-16-2026-11-11-45-AM.png" 
+                src="https://i.ibb.co/VpwDR173/Chat-GPT-Image-Jun-6-2026-02-41-08-AM.png" 
                 referrerPolicy="no-referrer"
                 loading="lazy"
                 alt="Workspace" 
