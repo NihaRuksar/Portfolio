@@ -1,9 +1,12 @@
+"use client";
+
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useAnimationControls } from 'motion/react';
-import { Github, ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { motion, AnimatePresence, useMotionValue, useScroll, useTransform } from 'motion/react';
+import { ReactLenis } from 'lenis/react';
+import 'lenis/dist/lenis.css';
+import { Github, ArrowRight, X } from 'lucide-react';
 
 const projects = [
-// ... (projects array remains the same)
   {
     id: 6,
     title: 'AI-Powered Smart HR Assistant',
@@ -45,7 +48,7 @@ const projects = [
   },
   {
     id: 2,
-    title: 'Cloud Connector',
+    title: 'GitHub Cloud Connector',
     subtitle: 'REST API',
     description: "Built a lightweight cloud connector using GitHub Personal Access Token authentication. Features: fetch repositories, list issues, create issues, create pull requests, centralized error handling, modular scalable architecture. Designed clean modular architecture separating routes, services, and data models for maintainability and scalability.",
     keyChallenges: [
@@ -63,7 +66,7 @@ const projects = [
     modalImage: 'https://i.ibb.co/B5ZY29d1/Chat-GPT-Image-May-16-2026-09-40-34-AM.png',
     demoUrl: 'https://drive.google.com/file/d/12PegCoP56jyrEjxoic7nzLhWmAyQY6Uv/view',
     githubUrl: 'https://github.com/NihaRuksar/github-connector?tab=readme-ov-file#readme',
-    tags: ['Hackathon']
+    tags: ['Hackathon', 'API']
   },
   {
     id: 3,
@@ -80,11 +83,11 @@ const projects = [
       'React for component reusability'
     ],
     tech: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Tailwind CSS'],
-    image: 'https://i.ibb.co/844MXVg4/Chat-GPT-Image-Jun-6-2026-04-09-33-AM.png',
+    image: 'https://i.ibb.co/MyvrdmmM/Chat-GPT-Image-May-16-2026-09-48-43-AM.png',
     modalImage: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?q=80&w=1974&auto=format&fit=crop',
     demoUrl: 'https://floralwe.netlify.app/',
     githubUrl: 'https://github.com/NihaRuksar/Flower-shop?tab=readme-ov-file#readme',
-    tags: ['Live']
+    tags: ['Live', 'E-Commerce']
   },
   {
     id: 4,
@@ -103,7 +106,8 @@ const projects = [
     tech: ['Python', 'FastAPI', 'REST APIs', 'Pydantic', 'SQLAlchemy ORM', 'MySQL'],
     image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop',
     modalImage: 'https://i.ibb.co/yn0kcrWC/Chat-GPT-Image-May-16-2026-09-52-52-AM.png',
-    githubUrl: 'https://github.com/NihaRuksar/job_board_api?tab=readme-ov-file#readme'
+    githubUrl: 'https://github.com/NihaRuksar/job_board_api?tab=readme-ov-file#readme',
+    tags: ['Backend', 'API']
   },
   {
     id: 5,
@@ -124,48 +128,93 @@ const projects = [
     modalImage: 'https://i.ibb.co/b5yXJ7c0/Chat-GPT-Image-Jun-2-2026-09-57-24-PM.png',
     demoUrl: 'https://benevolent-klepon-cd5224.netlify.app/',
     githubUrl: 'https://github.com/NihaRuksar/Translator?tab=readme-ov-file#readme',
-    tags: ['Hackathon','New']
+    tags: ['Hackathon', 'AI']
   }
 ];
 
-export function AllProjectsAccordion() {
+interface StickyCardProps {
+  key?: string | number;
+  imgUrl?: string;
+  project?: any;
+  onSelect?: (p: any) => void;
+  idx?: number;
+  total?: number;
+  progress?: any;
+}
+
+const StickyCard_003 = ({ imgUrl, project, onSelect, idx, total, progress }: StickyCardProps) => {
+  const i = idx ?? 0;
+  const n = total ?? 1;
+
+  const fallbackProgress = useMotionValue(0);
+  const p = progress || fallbackProgress;
+
+  const targetScale = Math.max(0.85, 1 - (n - 1 - i) * 0.04);
+  const scale = useTransform(p, [i / Math.max(1, n), 1], [1, targetScale]);
+
+  const displayImage = imgUrl || (project ? project.image : '');
+
+  return (
+    <motion.div
+      style={{ scale }}
+      onClick={() => project && onSelect && onSelect(project)}
+      className={`sticky top-[8vh] md:top-[9vh] w-[92%] sm:w-[82%] md:w-[72%] max-w-3xl mx-auto h-[70vh] sm:h-[78vh] md:h-[82vh] mb-[8vh] rounded-[28px] sm:rounded-[36px] md:rounded-[40px] overflow-hidden relative origin-top transition-all duration-300 ${
+        project 
+          ? 'bg-[#0A0A0E] border border-white/10 shadow-[0_25px_80px_rgba(0,0,0,0.8)] cursor-pointer group hover:border-[#7C8CFF]/50 hover:shadow-[0_30px_100px_rgba(124,140,255,0.22)]' 
+          : 'bg-neutral-200 h-[200px]'
+      }`}
+    >
+      {project ? (
+        <>
+          <img
+            src={displayImage}
+            alt={project.title}
+            className={`w-full h-full object-contain bg-[#0A0A0E] transition-transform duration-700 group-hover:scale-105 ${
+              project.id === 5 ? 'p-8 sm:p-12 bg-[#020205]' : ''
+            }`}
+          />
+          {project.tags && project.tags.length > 0 && (
+            <div className="absolute top-5 left-5 sm:top-7 sm:left-7 z-30 flex gap-2 flex-wrap pointer-events-none">
+              {project.tags.map((tag: string) => (
+                <span key={tag} className="px-3.5 py-1.5 rounded-full bg-[#7C8CFF]/90 backdrop-blur-md text-black font-mono text-[10px] font-bold tracking-wider uppercase shadow-[0_0_15px_rgba(124,140,255,0.4)]">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+          {['AI-First CRM', 'GitHub Cloud Connector', 'Job Board API'].includes(project.title) && (
+            <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8 z-30 pointer-events-none">
+              <div className="px-6 py-3 rounded-2xl bg-[#05050A]/85 backdrop-blur-md border border-white/15 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+                <h3 className="font-serif text-xl sm:text-2xl md:text-3xl text-white font-light tracking-tight">
+                  {project.title}
+                </h3>
+              </div>
+            </div>
+          )}
+        </>
+      ) : (
+        <img
+          src={displayImage}
+          alt={displayImage}
+          className="h-full w-full object-contain bg-neutral-200"
+        />
+      )}
+    </motion.div>
+  );
+};
+
+const Skiper34 = () => {
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
   const [activeFilter, setActiveFilter] = useState('All');
-  const [isHovered, setIsHovered] = useState(false);
-  const controls = useAnimationControls();
-  const carouselRef = useRef<HTMLDivElement>(null);
 
   const filterOptions = ['All', ...projects.map(p => p.title)];
   const displayedProjects = activeFilter === 'All' ? projects : projects.filter(p => p.title === activeFilter);
 
-  useEffect(() => {
-    let animation: any;
-    const startAnimation = async () => {
-      if (activeFilter !== 'All') {
-        controls.set({ x: 0 });
-        return;
-      }
-      if (!isHovered) {
-        animation = controls.start({
-          x: [0, -1500],
-          transition: {
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 35,
-              ease: "linear",
-            },
-          },
-        });
-      } else {
-        controls.stop();
-      }
-    };
-    startAnimation();
-    return () => {
-      if (animation) controls.stop();
-    };
-  }, [isHovered, controls, activeFilter]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end']
+  });
 
   useEffect(() => {
     if (selectedProject) {
@@ -177,129 +226,56 @@ export function AllProjectsAccordion() {
   }, [selectedProject]);
 
   return (
-    <section 
-      id="projects" 
-      className="py-16 md:py-24 flex flex-col items-center justify-center relative min-h-[60vh] -mt-20 md:-mt-32 z-30"
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 80, filter: 'blur(10px)' }}
-        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-12 md:mb-16 w-full px-6 md:px-12 lg:px-24 flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-20"
+    <ReactLenis root>
+      <section 
+        id="projects" 
+        className="relative flex w-full flex-col items-center gap-[6vh] md:gap-[8vh] px-4 pt-16 md:pt-24 pb-[20vh] z-30"
       >
-        <div className="flex items-center gap-3">
-          <h2 className="font-serif text-3xl md:text-4xl text-[#F5F5F5] font-light">
-            Selected <span className="text-[#7C8CFF] italic font-medium">Works</span>
-          </h2>
+        <div className="w-full max-w-7xl mx-auto px-2 sm:px-6 mb-4 flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-20">
+          <div className="flex items-center gap-3">
+            <h2 className="font-serif text-3xl md:text-5xl text-[#F5F5F5] font-light">
+              Selected <span className="text-[#7C8CFF] italic font-medium">Works</span>
+            </h2>
+          </div>
+          
+          <div className="flex flex-wrap items-center gap-2.5">
+            {filterOptions.map((option) => (
+              <button
+                key={option}
+                onClick={() => setActiveFilter(option)}
+                className={`px-4 py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-widest transition-all duration-300 border backdrop-blur-xl ${
+                  activeFilter === option
+                    ? 'bg-[#7C8CFF]/20 border-[#7C8CFF]/50 text-[#7C8CFF] shadow-[0_0_20px_rgba(124,140,255,0.3)]'
+                    : 'bg-white/5 border-white/10 text-[#B5B8C5] hover:bg-white/10 active:bg-white/10 hover:border-white/20 active:border-white/20 hover:text-[#F5F5F5] active:text-[#F5F5F5]'
+                }`}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
         </div>
-        
-        <div className="flex flex-wrap items-center gap-3">
-          {filterOptions.map((option) => (
-            <button
-              key={option}
-              onClick={() => setActiveFilter(option)}
-              className={`px-4 py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-widest transition-all duration-300 border backdrop-blur-md ${
-                activeFilter === option
-                  ? 'bg-[#7C8CFF]/20 border-[#7C8CFF]/50 text-[#7C8CFF] shadow-[0_0_20px_rgba(124,140,255,0.3)]'
-                  : 'bg-white/5 border-white/10 text-[#B5B8C5] hover:bg-white/10 active:bg-white/10 hover:border-white/20 active:border-white/20 hover:text-[#F5F5F5] active:text-[#F5F5F5]'
-              }`}
-            >
-              {option}
-            </button>
+
+        <div className="grid content-start justify-items-center gap-6 text-center my-2">
+          <span className="relative max-w-[18ch] text-xs font-mono uppercase tracking-widest text-[#B5B8C5] opacity-50 after:absolute after:left-1/2 after:top-full after:mt-3 after:h-16 after:w-px after:bg-gradient-to-b after:from-[#7C8CFF]/80 after:to-transparent after:content-['']">
+            scroll down to see effect
+          </span>
+        </div>
+
+        <div ref={containerRef} className="relative w-full max-w-6xl mx-auto pb-[10vh]">
+          {displayedProjects.map((project, idx) => (
+            <StickyCard_003 
+              key={`${project.id}-${activeFilter}`} 
+              project={project}
+              idx={idx}
+              total={displayedProjects.length}
+              progress={scrollYProgress}
+              onSelect={(p) => setSelectedProject(p)} 
+            />
           ))}
         </div>
-      </motion.div>
+      </section>
 
-      {/* Infinite Scrolling Marquee */}
-      <div 
-        className="relative w-full overflow-hidden py-10"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onTouchStart={() => setIsHovered(true)}
-        onTouchEnd={() => setIsHovered(false)}
-      >
-        {/* Left/Right Fades */}
-        {activeFilter === 'All' && (
-          <>
-            <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-[#000000] to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-[#000000] to-transparent z-10 pointer-events-none" />
-          </>
-        )}
-
-        <div className={`flex ${activeFilter === 'All' ? 'w-[300vw] md:w-max' : 'justify-center items-center w-full'}`}>
-          <motion.div 
-            ref={carouselRef}
-            animate={controls}
-            className={`flex gap-6 md:gap-8 px-4 ${activeFilter === 'All' ? 'min-w-max' : 'min-w-0'}`}
-          >
-            {/* Double/Triple the array for seamless looping only when All is selected */}
-            {(activeFilter === 'All' ? [...projects, ...projects, ...projects] : displayedProjects).map((project, index) => (
-              <motion.div
-                layoutId={`project-container-${project.id}-${index}`}
-                key={`${project.id}-${index}`}
-                initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
-                whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                viewport={{ once: true, margin: "50px" }}
-                transition={{ duration: 0.6, delay: (index % projects.length) * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="w-[280px] h-[380px] md:w-[320px] md:h-[420px] shrink-0 bg-[#0A0A0E] border border-white/5 rounded-3xl overflow-hidden flex flex-col group transition-all duration-300 hover:border-white/20 active:border-white/20 hover:bg-[#111116] active:bg-[#111116] hover:-translate-y-2 active:-translate-y-2 shadow-2xl relative cursor-pointer"
-                onClick={() => setSelectedProject(project)}
-              >
-                {/* Status Badges */}
-                {project.tags && project.tags.length > 0 && (
-                  <div className="absolute top-4 right-4 z-30 flex gap-2 flex-wrap justify-end">
-                    {project.tags.map(tag => (
-                      <div key={tag} className="px-2.5 py-1 rounded-full bg-[#7C8CFF]/90 backdrop-blur-sm text-black font-sans text-[9px] font-bold shadow-[0_0_15px_rgba(124,140,255,0.6)]">
-                        {tag}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                
-                {/* Lighting Sweep Animation on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#7C8CFF]/15 to-transparent -translate-x-[150%] skew-x-[-30deg] group-hover:translate-x-[150%] group-active:translate-x-[150%] transition-transform duration-1000 ease-in-out z-20 pointer-events-none" />
-
-                {/* Thumbnail */}
-                <div className="w-full h-[55%] relative overflow-hidden flex-shrink-0 bg-[#020205]">
-                  <motion.img 
-                    layoutId={`project-image-${project.id}-${index}`}
-                    src={project.image}
-                    alt={project.title}
-                    className={`w-full h-full transition-transform duration-1000 group-hover:scale-105 group-active:scale-105 ${project.id === 5 ? 'object-contain object-center p-6' : 'object-cover object-top'}`}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#05050A]/95 via-[#05050A]/20 to-transparent z-10" />
-                </div>
-
-                {/* Content Area */}
-                <div className="p-5 md:p-6 flex flex-col flex-grow bg-[#05050A]/95 relative z-30">
-                  <h4 className="font-mono text-[9px] text-[#7C8CFF] tracking-widest uppercase mb-1.5 drop-shadow-md">
-                    {project.subtitle}
-                  </h4>
-                  <h3 className="font-serif text-xl md:text-2xl text-[#F5F5F5] font-light drop-shadow-md line-clamp-1 transition-all duration-300 group-hover:text-white group-active:text-white">
-                    {project.title}
-                  </h3>
-                  
-                  {/* Tech Tags */}
-                  <div className="flex flex-wrap gap-1.5 mt-auto mb-1 opacity-80 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300">
-                    {project.tech.slice(0, 3).map(tech => (
-                      <span key={tech} className="font-mono text-[8px] uppercase tracking-wider px-1.5 py-0.5 bg-white/5 border border-white/10 text-white/80 rounded">
-                        {tech}
-                      </span>
-                    ))}
-                    {project.tech.length > 3 && (
-                      <span className="font-mono text-[8px] uppercase tracking-wider px-1.5 py-0.5 bg-white/5 border border-white/10 text-white/50 rounded">
-                        +{project.tech.length - 3}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Expanded Project View */}
+      {/* Expanded Project Modal View */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
@@ -309,7 +285,6 @@ export function AllProjectsAccordion() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-[100] flex items-center justify-center w-full h-full p-4 md:p-8 perspective-[1200px]"
           >
-            {/* Darkened subtle backdrop */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -319,48 +294,44 @@ export function AllProjectsAccordion() {
               onClick={() => setSelectedProject(null)}
             />
 
-            {/* Immersive Expanded Container */}
             <motion.div
               className="relative w-full max-w-3xl lg:max-w-4xl bg-[#05050A] shadow-[0_30px_100px_rgba(0,0,0,0.8)] rounded-[2rem] overflow-hidden glass-panel flex flex-col md:flex-row min-h-[40vh] md:min-h-[60vh] max-h-[85vh] md:max-h-[75vh] cursor-auto z-10 mx-auto transform-gpu"
             >
-              {/* Close Button */}
               <button
-                className="absolute top-4 right-4 p-3 text-white/50 hover:text-white active:text-white bg-black/40 hover:bg-black/90 active:bg-black/90 rounded-full transition-all z-50 backdrop-blur-md border border-white/10 hover:scale-105 active:scale-105"
+                className="absolute top-4 right-4 p-3 text-white/50 hover:text-white active:text-white bg-black/40 hover:bg-black/90 active:bg-black/90 rounded-full transition-all z-50 backdrop-blur-xl border border-white/10 hover:scale-105"
                 onClick={(e) => { e.stopPropagation(); setSelectedProject(null); }}
               >
                 <X className="w-5 h-5" />
               </button>
 
-              {/* LEFT: Cinematic Image Preview */}
               {selectedProject.id !== 6 && (
                 <div 
-                  className="w-full shrink-0 md:w-[45%] bg-[#020205] relative min-h-[30vh] md:min-h-[40vh] flex items-center justify-center p-4 cursor-pointer group"
+                  className="w-full shrink-0 md:w-[45%] bg-[#020205] relative h-[240px] sm:h-[280px] md:h-auto md:min-h-[40vh] flex items-center justify-center p-4 cursor-pointer group"
                   onClick={(e) => { e.stopPropagation(); setSelectedProject(null); }}
                 >
-                  <div className="absolute inset-0 flex items-center justify-center z-30 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity bg-black/40 backdrop-blur-sm pointer-events-none">
+                  <div className="absolute inset-0 flex items-center justify-center z-30 opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-xl pointer-events-none">
                     <span className="font-mono text-[10px] uppercase tracking-widest text-[#7C8CFF] px-4 py-2 bg-black/80 rounded-full border border-[#7C8CFF]/30">Back</span>
                   </div>
                   <motion.img
                     src={(selectedProject as any).modalImage || selectedProject.image}
                     alt={selectedProject.title}
                     loading="lazy"
-                    className="w-full h-full object-contain object-center shadow-2xl transition-transform duration-700 group-hover:scale-[0.98] group-active:scale-[0.98]"
+                    className="w-full h-full object-contain object-center shadow-2xl transition-transform duration-700 group-hover:scale-[0.98]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#05050A]/20 to-[#05050A] md:block hidden pointer-events-none" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#05050A] via-[#05050A]/20 to-transparent md:hidden block pointer-events-none" />
                 </div>
               )}
 
-              {/* RIGHT: Detailed Content */}
               <div 
-                className={`w-full ${selectedProject.id !== 6 ? 'md:w-[55%]' : 'md:w-[100%]'} p-6 md:p-8 flex flex-col justify-start relative z-20 cursor-auto overflow-y-auto custom-scrollbar`}
+                className={`w-full ${selectedProject.id !== 6 ? 'md:w-[55%]' : 'md:w-[100%]'} p-6 md:p-8 flex flex-col justify-start relative z-20 cursor-auto overflow-y-auto custom-scrollbar flex-1 min-h-0`}
                 onClick={(e) => e.stopPropagation()}
               >
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="bg-white/[0.04] border border-white/10 rounded-xl p-5 mb-8 hover:bg-white/[0.08] active:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+                  className="bg-white/[0.04] border border-white/10 rounded-xl p-5 mb-8 hover:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#7C8CFF] shadow-[0_0_8px_#7C8CFF]" />
@@ -385,7 +356,7 @@ export function AllProjectsAccordion() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                     {'keyChallenges' in selectedProject && selectedProject.keyChallenges && (
-                      <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5 hover:bg-white/[0.08] active:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+                      <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5 hover:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
                         <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-3">
                           <div className="w-1.5 h-1.5 rounded-full bg-[#7C8CFF] shadow-[0_0_8px_#7C8CFF]" />
                           <h5 className="font-mono text-[11px] sm:text-xs text-white font-bold tracking-widest uppercase drop-shadow-sm">Key Challenges</h5>
@@ -393,15 +364,15 @@ export function AllProjectsAccordion() {
                         <ul className="space-y-3">
                           {selectedProject.keyChallenges.map((challenge, idx) => (
                             <li key={idx} className="flex items-start gap-2.5 group">
-                              <span className="text-[#7C8CFF] mt-0.5 text-[11px] md:text-xs transition-colors drop-shadow-sm">▹</span>
-                              <span className="font-sans text-[#F5F5F5] font-medium text-[12px] md:text-[13px] leading-relaxed group-hover:text-white group-active:text-white transition-colors drop-shadow-sm">{challenge}</span>
+                              <span className="text-[#7C8CFF] mt-0.5 text-[11px] md:text-xs">▹</span>
+                              <span className="font-sans text-[#F5F5F5] font-medium text-[12px] md:text-[13px] leading-relaxed group-hover:text-white transition-colors">{challenge}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
                     {'technicalDecisions' in selectedProject && selectedProject.technicalDecisions && (
-                      <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5 hover:bg-white/[0.08] active:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+                      <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5 hover:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
                         <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-3">
                           <div className="w-1.5 h-1.5 rounded-full bg-[#7C8CFF] shadow-[0_0_8px_#7C8CFF]" />
                           <h5 className="font-mono text-[11px] sm:text-xs text-white font-bold tracking-widest uppercase drop-shadow-sm">Technical Decisions</h5>
@@ -409,8 +380,8 @@ export function AllProjectsAccordion() {
                         <ul className="space-y-3">
                           {selectedProject.technicalDecisions.map((decision, idx) => (
                             <li key={idx} className="flex items-start gap-2.5 group">
-                              <span className="text-[#7C8CFF] mt-0.5 text-[11px] md:text-xs transition-colors drop-shadow-sm">▹</span>
-                              <span className="font-sans text-[#F5F5F5] font-medium text-[12px] md:text-[13px] leading-relaxed group-hover:text-white group-active:text-white transition-colors drop-shadow-sm">{decision}</span>
+                              <span className="text-[#7C8CFF] mt-0.5 text-[11px] md:text-xs">▹</span>
+                              <span className="font-sans text-[#F5F5F5] font-medium text-[12px] md:text-[13px] leading-relaxed group-hover:text-white transition-colors">{decision}</span>
                             </li>
                           ))}
                         </ul>
@@ -423,14 +394,14 @@ export function AllProjectsAccordion() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                  className="bg-white/[0.04] border border-white/10 rounded-xl p-5 mb-8 hover:bg-white/[0.08] active:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+                  className="bg-white/[0.04] border border-white/10 rounded-xl p-5 mb-8 hover:bg-white/[0.08] transition-colors duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#7C8CFF] shadow-[0_0_8px_#7C8CFF]" />
                     <h5 className="font-mono text-[11px] sm:text-xs text-white font-bold tracking-widest uppercase drop-shadow-sm">Tech Stacks</h5>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {selectedProject.tech.map((t, i) => (
+                    {selectedProject.tech.map((t) => (
                       <span 
                         key={t} 
                         className="font-mono text-[9px] md:text-[10px] uppercase tracking-wider px-3 py-1.5 bg-white/[0.04] border border-white/5 text-white/80 rounded-md shadow-sm"
@@ -448,13 +419,13 @@ export function AllProjectsAccordion() {
                   className="flex flex-wrap items-center gap-4 mt-8"
                 >
                   {selectedProject.demoUrl && selectedProject.demoUrl !== '#' && (
-                    <a href={selectedProject.demoUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="group/btn relative flex items-center justify-center space-x-2 px-6 py-3 rounded-lg overflow-hidden transition-all duration-300 bg-white text-black hover:scale-105 active:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.15)]">
-                      <span className="font-sans tracking-widest text-[10px] font-bold relative z-10 uppercase transition-colors">Play Demo</span>
+                    <a href={selectedProject.demoUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="group/btn relative flex items-center justify-center space-x-2 px-6 py-3 rounded-lg overflow-hidden transition-all duration-300 bg-white text-black hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.15)]">
+                      <span className="font-sans tracking-widest text-[10px] font-bold relative z-10 uppercase">Play Demo</span>
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform relative z-10" />
                     </a>
                   )}
                   {selectedProject.githubUrl && (
-                    <a href={selectedProject.githubUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="group/link flex items-center justify-center space-x-2 px-6 py-3 rounded-lg border border-white/20 text-[#F5F5F5] bg-black/40 hover:bg-white/10 hover:border-white/40 active:bg-white/10 active:border-white/40 transition-all duration-300 backdrop-blur-md">
+                    <a href={selectedProject.githubUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="group/link flex items-center justify-center space-x-2 px-6 py-3 rounded-lg border border-white/20 text-[#F5F5F5] bg-black/40 hover:bg-white/10 hover:border-white/40 transition-all duration-300 backdrop-blur-xl">
                       <Github className="w-4 h-4 group-hover/link:scale-110 transition-transform" /> 
                       <span className="font-sans tracking-widest text-[10px] font-medium uppercase">Source Code</span>
                     </a>
@@ -466,8 +437,23 @@ export function AllProjectsAccordion() {
           </motion.div>
         )}
       </AnimatePresence>
-    </section>
+    </ReactLenis>
   );
-}
+};
 
+export { Skiper34, StickyCard_003, Skiper34 as AllProjectsAccordion };
 
+/**
+ * Skiper 34 StickyCard_003 — React + framer motion + lenis
+ *
+ * License & Usage:
+ * - Free to use and modify in both personal and commercial projects.
+ * - Attribution to Skiper UI is required when using the free version.
+ * - No attribution required with Skiper UI Pro.
+ *
+ * Feedback and contributions are welcome.
+ *
+ * Author: @gurvinder-singh02
+ * Website: https://gxuri.me
+ * Twitter: https://x.com/Gur__vi
+ */
