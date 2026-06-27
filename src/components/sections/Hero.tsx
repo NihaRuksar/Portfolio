@@ -2,6 +2,31 @@ import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 
+const heroSkills = [
+  { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg' },
+  { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
+  { name: 'HTML & CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg' },
+  { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
+  { name: 'Redux', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redux/redux-original.svg' },
+  { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
+  { name: 'Django & FastAPI', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg' },
+  { name: 'REST APIs', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg' },
+  { name: 'LangGraph & LangChain', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg' },
+  { name: 'httpx', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/axios/axios-plain.svg' },
+  { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg' },
+  { name: 'SQLAlchemy ORM', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlalchemy/sqlalchemy-original.svg' },
+  { name: 'Groq API', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg' },
+  { name: 'Gemma2-9b-it', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg' },
+  { name: 'Prompt Engineering', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/openapi/openapi-original.svg' },
+  { name: 'AI Models', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg' },
+  { name: 'OOP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg' },
+  { name: 'RBAC', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg' },
+  { name: 'State Management', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redux/redux-original.svg' },
+  { name: 'API Design', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg' },
+  { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
+  { name: 'GitHub', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg' }
+];
+
 export function Hero() {
   const ref = useRef(null);
   const [hoveredButton, setHoveredButton] = useState<'projects' | 'contact' | null>(null);
@@ -33,11 +58,11 @@ export function Hero() {
   };
 
   return (
-    <section ref={ref} id="home" className="relative min-h-[85vh] md:min-h-[90vh] w-full flex flex-col items-center justify-center overflow-hidden pt-28 pb-12 md:pt-32 md:pb-20">
+    <section ref={ref} id="home" className="relative min-h-[65vh] md:min-h-[70vh] w-full flex flex-col items-center justify-center overflow-hidden pt-28 pb-10 md:pt-32 md:pb-16">
       
       <motion.div 
         style={{ opacity, y, filter }}
-        className="relative z-10 w-full max-w-2xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-center"
+        className="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-center"
       >
         
         {/* Single Centered Glass Card */}
@@ -45,10 +70,10 @@ export function Hero() {
           initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="glass-panel w-full flex flex-col items-center justify-start relative overflow-hidden rounded-[36px] text-center transition-all duration-700 ease-out z-10 p-3 md:p-4"
+          className="glass-panel w-full flex flex-col items-center justify-start relative overflow-hidden rounded-[36px] text-center transition-all duration-700 ease-out z-10 p-6 md:p-10"
         >
           {/* Inner Background for glass effect with more depth and subtle animations */}
-          <div className="absolute inset-0 overflow-hidden rounded-[32px] m-3 md:m-4 bg-[#020205]/40 border border-white/5 pointer-events-none z-0 shadow-inner backdrop-blur-md">
+          <div className="absolute inset-0 overflow-hidden rounded-[32px] m-3 md:m-4 bg-[#020205]/40 border border-white/5 pointer-events-none z-0 shadow-inner backdrop-blur-xl backdrop-saturate-150 backdrop-brightness-110">
             {/* Ambient inner card glows */}
             <motion.div 
               animate={{ opacity: [0.1, 0.25, 0.1], scale: [1, 1.1, 1] }} 
@@ -75,34 +100,14 @@ export function Hero() {
             }`} 
           />
 
-          {/* Fully Fitted Image on Top */}
-          <div className="w-full relative h-[52vh] sm:h-[42vh] md:h-[52vh] rounded-[24px] md:rounded-[28px] overflow-hidden group z-10">
-            {/* Mobile image - hidden on md and above */}
-            <img 
-              src="https://i.ibb.co/LXFBBWrT/Chat-GPT-Image-Jun-6-2026-03-23-57-AM.png" 
-              referrerPolicy="no-referrer"
-              alt="Niha Ruksar" 
-              loading="lazy"
-              className="w-full h-full object-cover object-[center_10%] opacity-90 transition-all duration-1000 ease-out group-hover:scale-105 group-hover:opacity-100 group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] block md:hidden"
-             />
-
-            {/* Desktop image - hidden below md */}
-            <img 
-              src="https://i.ibb.co/Pv3BfBmT/Chat-GPT-Image-Jun-6-2026-03-27-41-AM.png" 
-              referrerPolicy="no-referrer"
-              alt="Niha Ruksar" 
-              loading="lazy"
-              className="w-full h-full object-cover object-[center_15%] opacity-90 transition-all duration-1000 ease-out group-hover:scale-105 group-hover:opacity-100 group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] hidden md:block"
-            />
-            <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-[#05050A]/90 via-[#05050A]/30 to-transparent pointer-events-none z-20" />
-            
-            {/* Decorative element over the image */}
-            <div className="absolute top-4 left-4 md:top-6 md:left-6 py-1.5 px-3 rounded-xl border border-white/10 bg-[#05050A]/40 backdrop-blur-md hidden sm:block z-30">
-              <span className="font-mono text-[9px] md:text-[10px] text-[#F5F7FF] tracking-widest uppercase">Available for work</span>
+          {/* Top Content */}
+          <div className="flex flex-col items-center justify-center relative z-20 pt-4 pb-2 w-full">
+            {/* Available for work Pill */}
+            <div className="mb-6 inline-flex items-center gap-2.5 py-1.5 px-4 rounded-full border border-[#7C8CFF]/30 bg-[#7C8CFF]/10 backdrop-blur-md shadow-[0_0_15px_rgba(124,140,255,0.2)]">
+              <span className="w-2 h-2 rounded-full bg-[#7C8CFF] animate-pulse shadow-[0_0_8px_rgba(124,140,255,0.8)]" />
+              <span className="font-mono text-[10px] md:text-xs text-[#E0E5FF] tracking-widest uppercase">Available for work</span>
             </div>
-          </div>
 
-          <div className="flex flex-col items-center justify-center relative z-20 px-6 py-8 md:px-10 md:py-10">
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="h-[1px] w-6 md:w-12 bg-gradient-to-r from-transparent to-[#F5F7FF]/30"></div>
               <h2 className="font-mono text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em] text-[#B5B8C5] uppercase drop-shadow-md">
@@ -111,28 +116,27 @@ export function Hero() {
               <div className="h-[1px] w-6 md:w-12 bg-gradient-to-l from-transparent to-[#F5F7FF]/30"></div>
             </div>
 
-            <h1 className="font-serif text-3xl md:text-4xl tracking-tight text-[#F5F5F5] mb-6 md:mb-8 font-light">
+            <h1 className="font-serif text-3xl md:text-5xl tracking-tight text-[#F5F5F5] mb-8 md:mb-10 font-light">
               <span className="italic text-[#B5B8C5]">Hi, I'm</span> <span className="font-medium drop-shadow-md">Niha Ruksar</span>
             </h1>
 
-            <p className="font-sans text-sm sm:text-base md:text-lg text-[#B5B8C5] max-w-xl leading-relaxed mb-10 font-light mx-auto px-2 drop-shadow-sm">
+            <p className="font-sans text-sm sm:text-base md:text-lg text-[#B5B8C5] max-w-xl leading-relaxed mb-8 font-light mx-auto px-2 drop-shadow-sm">
               I craft intelligent systems and premium digital experiences by merging robust software engineering with advanced AI architectures. Building the future, elegantly.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
               <a 
                 href="#projects" 
                 onClick={(e) => handleAnchorClick(e, '#projects')}
                 onMouseEnter={() => setHoveredButton('projects')}
                 onMouseLeave={() => setHoveredButton(null)}
-                className="group relative flex items-center justify-center space-x-2 bg-[#7C8CFF]/90 backdrop-blur-md text-white px-6 py-3 sm:px-8 sm:py-4 rounded-[16px] sm:rounded-[20px] transition-all duration-500 ease-out shadow-[0_8px_32px_rgba(124,140,255,0.3)] hover:shadow-[0_16px_48px_rgba(124,140,255,0.5)] hover:-translate-y-1 hover:bg-[#7C8CFF] overflow-hidden"
+                className="group relative flex items-center justify-center space-x-2 bg-[#7C8CFF]/90 backdrop-blur-xl backdrop-saturate-150 backdrop-brightness-110 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-[16px] sm:rounded-[20px] transition-all duration-500 ease-out shadow-[0_8px_32px_rgba(124,140,255,0.3)] hover:shadow-[0_16px_48px_rgba(124,140,255,0.5)] active:shadow-[0_16px_48px_rgba(124,140,255,0.5)] hover:-translate-y-1 active:-translate-y-1 hover:bg-[#7C8CFF] active:bg-[#7C8CFF] overflow-hidden"
               >
-                {/* Ripple Effect */}
-                <span className="absolute inset-0 rounded-[16px] sm:rounded-[20px] bg-white/20 opacity-0 group-hover:opacity-100 group-hover:animate-ping duration-1000 origin-center pointer-events-none" />
-                <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.4)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none mix-blend-overlay" />
+                <span className="absolute inset-0 rounded-[16px] sm:rounded-[20px] bg-white/20 opacity-0 group-hover:opacity-100 group-active:opacity-100 group-hover:animate-ping group-active:animate-ping duration-1000 origin-center pointer-events-none" />
+                <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.4)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500 pointer-events-none mix-blend-overlay" />
                 
                 <span className="font-sans tracking-wider text-xs font-medium relative z-10 uppercase transition-colors">View Projects</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform relative z-10" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform relative z-10" />
               </a>
               
               <a 
@@ -140,15 +144,33 @@ export function Hero() {
                 onClick={(e) => handleAnchorClick(e, '#contact')} 
                 onMouseEnter={() => setHoveredButton('contact')}
                 onMouseLeave={() => setHoveredButton(null)}
-                className="group relative flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 rounded-[16px] sm:rounded-[20px] border border-white/10 text-[#F5F5F5] hover:bg-white/10 backdrop-blur-md transition-all duration-500 ease-out hover:-translate-y-1 hover:border-white/30 overflow-hidden"
+                className="group relative flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 rounded-[16px] sm:rounded-[20px] border border-white/10 text-[#F5F5F5] hover:bg-white/10 active:bg-white/10 backdrop-blur-xl backdrop-saturate-150 backdrop-brightness-110 transition-all duration-500 ease-out hover:-translate-y-1 active:-translate-y-1 hover:border-white/30 active:border-white/30 overflow-hidden"
               >
-                {/* Ripple Effect */}
-                <span className="absolute inset-0 bg-[#7C8CFF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none mix-blend-overlay" />
-                <span className="absolute inset-0 rounded-[16px] sm:rounded-[20px] border border-white/20 scale-100 group-hover:scale-[1.05] group-hover:opacity-0 transition-all duration-700 pointer-events-none" />
+                <span className="absolute inset-0 bg-[#7C8CFF]/5 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500 pointer-events-none mix-blend-overlay" />
+                <span className="absolute inset-0 rounded-[16px] sm:rounded-[20px] border border-white/20 scale-100 group-hover:scale-[1.05] group-active:scale-[1.05] group-hover:opacity-0 group-active:opacity-0 transition-all duration-700 pointer-events-none" />
 
                 <span className="font-sans tracking-wider text-xs font-light uppercase relative z-10">Contact</span>
               </a>
             </div>
+
+            {/* Tech Icons Marquee Moving Right to Left */}
+            <div className="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] pt-6 border-t border-white/10 mt-2">
+              <motion.div
+                className="flex items-center gap-8 md:gap-12 w-max"
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ repeat: Infinity, ease: "linear", duration: 70 }}
+              >
+                {[...heroSkills, ...heroSkills].map((skill, index) => (
+                  <div key={index} className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/[0.08] border border-white/20 shadow-[0_0_15px_rgba(124,140,255,0.15)] hover:border-[#7C8CFF] hover:bg-[#7C8CFF]/25 hover:shadow-[0_0_25px_rgba(124,140,255,0.45)] transition-all duration-300 shrink-0 group/skill cursor-default">
+                    <div className="p-1.5 rounded-lg bg-white/20 backdrop-blur-md flex items-center justify-center shadow-[0_0_10px_rgba(255,255,255,0.2)] group-hover/skill:scale-110 transition-transform duration-300">
+                      <img src={skill.icon} alt={skill.name} className="w-5 h-5 md:w-6 md:h-6 object-contain filter drop-shadow-[0_0_6px_rgba(255,255,255,0.7)] brightness-110" />
+                    </div>
+                    <span className="font-mono text-xs md:text-sm text-white font-bold tracking-wider uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">{skill.name}</span>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+
           </div>
         </motion.div>
 
@@ -160,7 +182,7 @@ export function Hero() {
         animate={{ opacity: 1 }}
         style={{ opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]) }}
         transition={{ delay: 0.8, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3 text-[#B5B8C5] z-40 hover:opacity-100 transition-opacity"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3 text-[#B5B8C5] z-40 hover:opacity-100 active:opacity-100 transition-opacity"
       >
         <span className="font-mono text-[10px] tracking-[0.3em] font-light uppercase">Scroll to explore</span>
         <motion.div
